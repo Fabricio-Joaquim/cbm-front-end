@@ -6,8 +6,9 @@ import Button from '../Button';
 interface IProps{
     Person: IPerson;
     index: number;
+    onClick:any;
 }
-const CardPerson: React.FC<IProps> = ({Person, index}:IProps) => {
+const CardPerson: React.FC<IProps> = ({Person, index, onClick}:IProps) => {
   return (
     <Grid templateColumns='1fr .5fr' gap={6}
       key={Person.cpf}
@@ -21,7 +22,9 @@ const CardPerson: React.FC<IProps> = ({Person, index}:IProps) => {
       <Button
         w={['80px', '160px']} height={'35px'}
         fontWeight={'500'} fontSize={'1.125rem'}
-        color='Orange' lineHeight={'21px'}>
+        color='Orange' lineHeight={'21px'}
+        onClick={()=>onClick(Person)}
+      >
         <AiOutlineSearch height={21} width={21} color="#fff"/>Ver
       </Button>
     </Grid>

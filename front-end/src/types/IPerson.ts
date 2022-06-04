@@ -8,7 +8,7 @@ export default interface IPerson{
     tipo_sanguineo: string,
     resumo: string,
     competencias: string[],
-    data_nascimento: Date,
+    data_nascimento:string| Date,
     experiencia?: IExpirience[],
     formacao: IGraduation[]
 }

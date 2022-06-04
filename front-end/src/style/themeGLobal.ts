@@ -10,6 +10,23 @@ const theme:Theme | any = extendTheme({
       lineHeight: '48px',
       color: '#767474',
     },
+    h2: {
+
+    },
+    h3: {
+      fontStyle: 'normal',
+      fontWeight: '500',
+      fontSize: '1.5rem',
+      lineHeight: '29px',
+      color: '#767474',
+    },
+    span: {
+      fontWeight: '500',
+      fontSize: '1.25rem',
+      lineHeight: '24px',
+      color: '#868686',
+    },
+
   },
   styles: {
     global: {

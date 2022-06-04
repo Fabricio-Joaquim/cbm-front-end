@@ -1,8 +1,9 @@
 import React from 'react';
-
-const Form = ()=>{
+// import FormStep1 from './FormStep1';
+import FormStep3 from './FormStep3';
+const Form: React.FC = () => {
   return (
-    <div>Form</div>
+    <FormStep3/>
   );
 };
 

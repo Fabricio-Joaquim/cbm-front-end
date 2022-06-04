@@ -5,11 +5,17 @@ import {useNavigate} from 'react-router-dom';
 import api from '../../services';
 import IPerson from '../../types/IPerson';
 import CardPerson from '../../components/CardPerson';
+import {useGlobalContext} from '../../contexts/globalContext';
 
 const Description: React.FC = () => {
   const [list, setList] = React.useState<IPerson[]>([]);
   const navigate = useNavigate();
   const backScreen = () => navigate(-1);
+  const {setPersonDescription} = useGlobalContext();
+  const handlerPerson = (person: IPerson) => {
+    setPersonDescription(person);
+    navigate('/descricao');
+  };
   useEffect(() => {
     api.get('perfil').then(({data})=>setList(data));
   }, []);
@@ -28,10 +34,13 @@ const Description: React.FC = () => {
       >
         {list.map(
             (Person:IPerson, index:number)=>
-              <CardPerson key={index} Person={Person} index={index}/>,
-        )
-        }
-
+              <CardPerson
+                key={index}
+                Person={Person}
+                index={index}
+                onClick={handlerPerson}
+              />,
+        ) }
       </Flex>
       <Button h={'68px'} borderRadius={'10px'}
         w={'216px'} color='Orange' onClick={backScreen}>

@@ -1,5 +1,6 @@
+import ListOfCompetitor from './ListOfCompetitor';
+import Description from './Description';
 import Home from './Home';
 import Form from './Form';
-import ListOfCompetitor from './ListOfCompetitor';
 
-export {Home, Form, ListOfCompetitor};
+export {Home, Form, ListOfCompetitor, Description};

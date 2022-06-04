@@ -3,13 +3,16 @@ import {ChakraProvider} from '@chakra-ui/react';
 import Routes from './Router';
 import theme from './style/themeGLobal';
 import Layer from './components/Layer';
+import {GlobalProvider} from './contexts/globalContext';
 
 const App = () => {
   return (
     <ChakraProvider theme={theme}>
-      <Layer>
-        <Routes/>
-      </Layer>
+      <GlobalProvider>
+        <Layer>
+          <Routes/>
+        </Layer>
+      </GlobalProvider>
     </ChakraProvider>
   );
 };

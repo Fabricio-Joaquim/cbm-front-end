@@ -17,7 +17,11 @@ const MyButton: React.FC<IProps> = ({color, children, onClick, ...rest}) =>
     bgGradient={color === 'Gray' ? Gray : Orange}
     fontWeight={'500'} fontSize={'1.125rem'}
     lineHeight={'39px'} color={'#fff'}
-    w={'100%'} h={'90px'}
+    w={'100%'}
+    maxW={'216px'}
+    minW={'129px'}
+    maxH={'90px'}
+    minH={'35px'}
     onClick={onClick}
     {...rest}
   >

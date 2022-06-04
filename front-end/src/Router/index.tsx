@@ -7,7 +7,8 @@ const Router = () => {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Page.Home />} />
-        <Route path="/Form" element={<Page.Form />} />
+        <Route path="/formulario" element={<Page.Form />} />
+        <Route path="/descricao" element={<Page.Description />} />
         <Route path="/lista-de-candidatos"
           element={<Page.ListOfCompetitor />} />
       </Routes>
