@@ -2,23 +2,28 @@
 import React from 'react';
 import {FormControl, FormLabel, Input,
   InputProps, FormErrorMessage, Textarea} from '@chakra-ui/react';
-import {Field, useFormikContext} from 'formik';
+import {Field, useFormikContext, getIn} from 'formik';
 
 interface IProps extends InputProps {
   nameID: 'telefone' | 'email' | 'nome' |
    'cpf' | 'data_nascimento' | 'signo' | 'tipo_sanguineo' | any;
    _label: string;
-   _typeInput?: 'Input'| 'TextArea'
+   isTextArea?: boolean;
 }
 
 const MyInput: React.FC<IProps> =
-({nameID, _label, _typeInput, ...rest}:IProps) => {
+({nameID, _label, isTextArea, ...rest}:IProps) => {
   const {errors, touched} = useFormikContext();
+  const errorMessage = getIn(errors, nameID);
+  const arrayErrorTouch = getIn(touched, nameID);
+  console.log(getIn(errors, nameID));
   return (
-    <FormControl isInvalid={!!errors[nameID] && touched[nameID]}>
+    <FormControl isInvalid={
+      (!!errors[nameID] && touched[nameID]) || (errorMessage && arrayErrorTouch)
+    }>
       <FormLabel htmlFor="password">{_label}</FormLabel>
       <Field
-        as={_typeInput==='Input'? Input: Textarea}
+        as={isTextArea? Textarea : Input}
         id={nameID}
         style={{backgroundColor: '#F3F3F3', borderRadius: '11px'}}
         name={nameID}
@@ -26,7 +31,9 @@ const MyInput: React.FC<IProps> =
         variant="outline"
         {...rest}
       />
-      <FormErrorMessage>{errors[nameID]}</FormErrorMessage>
+      <FormErrorMessage>
+        {errors[nameID] || errorMessage}
+      </FormErrorMessage>
     </FormControl> );
 };
 

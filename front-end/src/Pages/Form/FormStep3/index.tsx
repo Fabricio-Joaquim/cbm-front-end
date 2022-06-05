@@ -4,41 +4,45 @@ import MyInput from '../../../components/Input';
 import {Box, Heading, Flex, useDisclosure} from '@chakra-ui/react';
 import Button from '../../../components/Button';
 import MyModal from '../../../components/Modal';
-
+import {useFormContext} from '../../../contexts/FormContext';
+import {stepThreeValidate} from '../validation';
 const FormStep3: React.FC = () => {
   const {isOpen, onOpen, onClose} = useDisclosure();
 
-  React.useEffect(() => {
-  }, []);
+  const {nextStep, prevStep, dataFormStep, dataForm} = useFormContext();
 
   return (
     <>
       <Box w={'full'}>
         <Heading textAlign={'center'}>Resumo</Heading>
         <Formik
-          initialValues={{
-            sobre: '',
-          }}
+          validationSchema={stepThreeValidate}
+          initialValues={
+            dataFormStep.stepThree || {
+              resumo: '',
+            }}
           onSubmit={(values) => {
-            alert(JSON.stringify(values, null, 2));
+            nextStep();
+            dataForm(values, 'stepThree');
+            onOpen();
           }}
         >
           {({handleSubmit}) => (
             <Form onSubmit={handleSubmit}>
               <MyInput
                 _label='Sobre'
-                nameID={'sobre'}
+                nameID={'resumo'}
                 placeholder={'Sobre mim...'}
-                _typeInput={'TextArea'}
+                isTextArea
                 height={'10rem'}
                 resize={'none'}
               />
               <Flex w={'full'}
                 marginTop={'3rem'}
                 justifyContent={'space-around'}>
-                <Button color='Gray'>Voltar</Button>
+                <Button onClick={prevStep} color='Gray'>Voltar</Button>
                 <Button color='Orange'
-                  onClick={onOpen} type='submit'>Salvar</Button>
+                  type='submit'>Salvar</Button>
               </Flex>
             </Form>
           )}

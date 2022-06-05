@@ -5,7 +5,7 @@ import {useNavigate} from 'react-router-dom';
 import api from '../../services';
 import IPerson from '../../types/IPerson';
 import CardPerson from '../../components/CardPerson';
-import {useGlobalContext} from '../../contexts/globalContext';
+import {useGlobalContext} from '../../contexts/GlobalContext';
 
 const Description: React.FC = () => {
   const [list, setList] = React.useState<IPerson[]>([]);

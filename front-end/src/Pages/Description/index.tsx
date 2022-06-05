@@ -1,5 +1,5 @@
 import React from 'react';
-import {useGlobalContext} from '../../contexts/globalContext';
+import {useGlobalContext} from '../../contexts/GlobalContext';
 import {Text, Flex, Box, Divider} from '@chakra-ui/react';
 import {headerName, formatDate, maskedPhone, maskedCPF} from '../../utils';
 

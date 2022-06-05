@@ -10,8 +10,8 @@ export default interface IPerson{
     competencias: string[],
     data_nascimento:string| Date,
     experiencia?: IExpirience[],
-    formacao: IGraduation[]
-}
+    formacao: IGraduation[],
+};
 
 
 interface IExpirience{

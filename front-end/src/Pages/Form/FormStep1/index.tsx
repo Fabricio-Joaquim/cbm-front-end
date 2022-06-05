@@ -7,10 +7,13 @@ import api from '../../../services';
 import {convertArrayToOptions} from '../../../utils';
 import {formatCPF, numberPhone} from '../../../utils/regexInput';
 import {maxInputDate} from '../../../utils/minMaxDate';
+import {useFormContext} from '../../../contexts/FormContext';
+import {stepOneValidate} from '../validation';
 
 interface IOptions{value:string, label:string}
 
 const FormStep1: React.FC = () => {
+  const {nextStep, dataFormStep, dataForm} = useFormContext();
   const [signos, setSignos] = useState<IOptions[]>([]);
   const [tipoSanguinio, setTipoSanguinio] = useState<IOptions[]>([]);
   useEffect(() => {
@@ -28,23 +31,29 @@ const FormStep1: React.FC = () => {
 
   return (
     <Formik
-      initialValues={{
-        nome: '',
-        cpf: '',
-        data_nascimento: '',
-        signo: '',
-        tipo_sanguineo: '',
-        email: '',
-        telefone: '',
-      }}
+      validationSchema={stepOneValidate}
+      initialValues={
+        dataFormStep.stepOne ||
+        {
+          name: '',
+          cpf: '',
+          data_nascimento: '',
+          signo: '',
+          tipo_sanguineo: '',
+          email: '',
+          telefone: '',
+        }}
       onSubmit={(values) => {
-        alert(JSON.stringify(values, null, 2));
+        nextStep();
+        dataForm(values, 'stepOne');
       }}
     >
       {({handleSubmit, setFieldValue}) => (
         <Form onSubmit={handleSubmit}>
           <Flex flexDirection={'column'} gap={2}>
-            <MyInput _label='Nome' nameID='nome'/>
+            <MyInput _label='Nome' nameID='name'
+              placeholder='Nome'
+            />
             <Grid templateColumns="1fr 1fr"
               gap={4}
             >

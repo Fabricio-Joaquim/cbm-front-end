@@ -1,29 +1,10 @@
 import {ModalOverlay, ModalContent, ModalBody,
   ModalFooter, Modal, Text} from '@chakra-ui/react';
 import {FaCheck} from 'react-icons/fa';
-import * as yup from 'yup';
 import React from 'react';
 import Button from '../../components/Button';
 
 const MyModal = ({isOpen, onClose}:any) => {
-  // eslint-disable-next-line no-unused-vars
-  const schema = yup.object().shape({
-    name: yup.string().required(),
-    age: yup.number().required().positive().integer(),
-    email: yup.string().email(),
-    website: yup.string().url(),
-    createdOn: yup.date().default(function() {
-      return new Date();
-    }),
-  });
-  /*
-            font-weight: 600;
-font-size: 32px;
-line-height: 39px;
-text-align: center;
-
-color: #429542;
-            */
   return (
     <>
 

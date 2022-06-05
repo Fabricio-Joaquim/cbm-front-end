@@ -1,10 +1,15 @@
 import React from 'react';
-// import FormStep1 from './FormStep1';
-// import FormStep3 from './FormStep3';
-import HeaderForm from '../../components/HeaderForm';
+import {FormProvider} from '../../contexts/FormContext';
+import {Box} from '@chakra-ui/react';
+import FormComplete from './FormComplete';
+
 const Form: React.FC = () => {
   return (
-    <HeaderForm />
+    <FormProvider>
+      <Box>
+        <FormComplete />
+      </Box>
+    </FormProvider>
   );
 };
 

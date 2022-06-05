@@ -1,7 +1,7 @@
 import React, {createContext, useContext} from 'react';
-import IContext from '../types/IContext';
+import {IGlobalContext} from '../../types/IContext';
 
-const GlobalContext = createContext<IContext>({
+const GlobalContext = createContext<IGlobalContext>({
   setState: null, state: null});
 
 interface Props {
