@@ -10,9 +10,6 @@ const theme:Theme | any = extendTheme({
       lineHeight: '48px',
       color: '#767474',
     },
-    h2: {
-
-    },
     h3: {
       fontStyle: 'normal',
       fontWeight: '500',
@@ -22,6 +19,12 @@ const theme:Theme | any = extendTheme({
     },
     span: {
       fontWeight: '500',
+      fontSize: '1.25rem',
+      lineHeight: '24px',
+      color: '#868686',
+    },
+    spanSub: {
+      fontWeight: '400',
       fontSize: '1.25rem',
       lineHeight: '24px',
       color: '#868686',
@@ -44,6 +47,17 @@ const theme:Theme | any = extendTheme({
         color: 'teal.500',
         _hover: {
           textDecoration: 'none',
+        },
+      },
+      button: {
+        _hover: {
+          bg: '#f4f4f4 !important',
+          border: '2px #979595 solid !important',
+          color: '#979595',
+          transition: '$button-hover .3s ease-in-out !important',
+          svg: {
+            fill: '#979595',
+          },
         },
       },
     },

@@ -6,7 +6,7 @@ import FormComplete from './FormComplete';
 const Form: React.FC = () => {
   return (
     <FormProvider>
-      <Box>
+      <Box w={'2000px'}>
         <FormComplete />
       </Box>
     </FormProvider>

@@ -9,23 +9,52 @@ interface IProps extends ButtonProps{
     children: string | React.ReactNode,
     onClick?: () => void | any,
     rest?:any,
+    _sizeButton?: 'sm' | 'md' | 'lg',
 }
 
-const MyButton: React.FC<IProps> = ({color, children, onClick, ...rest}) =>
-  <Button
-    borderRadius={'63px'}
-    bgGradient={color === 'Gray' ? Gray : Orange}
-    fontWeight={'500'} fontSize={'1.125rem'}
-    lineHeight={'39px'} color={'#fff'}
-    w={'100%'}
-    maxW={'216px'}
-    minW={'129px'}
-    maxH={'90px'}
-    minH={'35px'}
-    onClick={onClick}
-    {...rest}
-  >
-    {children}
-  </Button>;
+const MyButton: React.FC<IProps> = ({color, children,
+  onClick, _sizeButton, ...rest}) =>{
+  let personalizeSize ={};
+  switch (_sizeButton) {
+    case 'lg':
+      personalizeSize = {
+        w: ['280px', '408px'],
+        h: '90px',
+        fontSize: '2rem',
+        fontStyle: 'normal',
+        fontWeight: '500',
+        lineHeight: '39px',
+      };
+      break;
+    case 'md':
+      personalizeSize = {
+        w: '216.84px',
+        h: '68px',
+        borderRadius: '14px',
+      };
+      break;
+    default: '';
+  }
+
+
+  return (
+    <Button
+      borderRadius={'63px'}
+      bgGradient={color === 'Gray' ? Gray : Orange}
+      fontWeight={'500'} fontSize={'1.125rem'}
+      lineHeight={'39px'} color={'#fff'}
+      w={'100%'}
+      maxW={'408px'}
+      minW={'129px'}
+      maxH={'90px'}
+      minH={'35px'}
+      onClick={onClick}
+      {...personalizeSize}
+      {...rest}
+    >
+      {children}
+    </Button>
+  );
+};
 
 export default MyButton;

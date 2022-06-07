@@ -41,7 +41,7 @@ const HeaderForm: React.FC = () => {
   ];
 
   return (
-    <Flex w={'fit-content'}>
+    <Flex justifyContent={'center'}>
       {render.map((item) => <Fragment key={item.id}>
         {item.component}
       </Fragment>,

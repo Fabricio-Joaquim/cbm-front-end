@@ -1,53 +1,58 @@
 import React from 'react';
+import Title from '../Title';
 import {Form, Formik} from 'formik';
 import MyInput from '../../../components/Input';
-import {Box, Heading, Flex, useDisclosure} from '@chakra-ui/react';
-import Button from '../../../components/Button';
 import MyModal from '../../../components/Modal';
-import {useFormContext} from '../../../contexts/FormContext';
 import {stepThreeValidate} from '../validation';
+import {Box, useDisclosure} from '@chakra-ui/react';
+import {useFormContext} from '../../../contexts/FormContext';
+import GroupButtonLeftRight from '../../../components/GroupButtonLeftRight';
+
 const FormStep3: React.FC = () => {
   const {isOpen, onOpen, onClose} = useDisclosure();
 
-  const {nextStep, prevStep, dataFormStep, dataForm} = useFormContext();
+  const {nextStep, prevStep, dataForm} = useFormContext();
 
   return (
     <>
       <Box w={'full'}>
-        <Heading textAlign={'center'}>Resumo</Heading>
+        <Title>Resumo</Title>
         <Formik
           validationSchema={stepThreeValidate}
           initialValues={
-            dataFormStep.stepThree || {
+            {
               resumo: '',
             }}
-          onSubmit={(values) => {
+          onSubmit={(values:{resumo:string}) => {
             nextStep();
             dataForm(values, 'stepThree');
             onOpen();
           }}
         >
-          {({handleSubmit}) => (
-            <Form onSubmit={handleSubmit}>
-              <MyInput
-                _label='Sobre'
-                nameID={'resumo'}
-                placeholder={'Sobre mim...'}
-                isTextArea
-                height={'10rem'}
-                resize={'none'}
+          <>
+            <Form>
+              <Box paddingX={'32'}
+                paddingBottom={'20'}>
+                <MyInput
+                  _label='Sobre'
+                  nameID={'resumo'}
+                  placeholder={'Sobre mim...'}
+                  isTextArea
+                  height={'10rem'}
+                  resize={'none'}
+                />
+              </Box>
+              <GroupButtonLeftRight
+                labelLeft='Voltar'
+                labelRight='Próximo'
+                onClickLeft={prevStep}
+                onClickNext={()=>{}}
+                _sizeButton={'md'}
+                typeButtonRight={'submit'}
               />
-              <Flex w={'full'}
-                marginTop={'3rem'}
-                justifyContent={'space-around'}>
-                <Button onClick={prevStep} color='Gray'>Voltar</Button>
-                <Button color='Orange'
-                  type='submit'>Salvar</Button>
-              </Flex>
             </Form>
-          )}
+          </>
         </Formik>
-
       </Box>
       <MyModal isOpen={isOpen} onClose={onClose}/>
     </>

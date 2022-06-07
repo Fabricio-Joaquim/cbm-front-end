@@ -12,8 +12,9 @@ const Layer: React.FC<Props> = ({children}) => {
       boxShadow="0px 24px 32px rgba(0, 0, 0, 0.25)"
       borderRadius="70"
       justifyContent="center"
-      minWidth="589px"
+      minWidth={['310px', '589px']}
       maxWidth="998px"
+      margin={'50px'}
       padding={'5'}
     >
       {children}

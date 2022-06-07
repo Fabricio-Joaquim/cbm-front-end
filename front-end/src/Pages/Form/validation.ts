@@ -1,12 +1,16 @@
 import * as yup from 'yup';
+import {maxInputDate} from '../../utils/minMaxDate';
+import {validateCPF} from '../../utils/ValidateCPF';
+
 
 const stepOneValidate = yup.object().shape({
-  name: yup.string().required('Name  é obrigatório'),
+  name: yup.string().required('Nome  é obrigatório'),
   cpf: yup.string().required('CPF é obrigatório')
       .max(14, 'CPF inválido')
-      .min(14, 'CPF inválido'),
+      .min(14, 'CPF inválido')
+      .test('cpf', 'CPF inválido', (value) => validateCPF(value)),
   data_nascimento: yup.date().required('Data de nascimento é obrigatória').max(
-      new Date(2004, 0, 1), 'Data de nascimento inválida'),
+      new Date(maxInputDate), 'Data de nascimento inválida'),
   signo: yup.string().required('Signo é obrigatório'),
   tipo_sanguineo: yup.string().required('Tipo sanguíneo é obrigatório'),
   email: yup.string().email('Email inválido').required('Email é obrigatório'),
@@ -20,14 +24,21 @@ const stepTwoValidate = yup.object().shape({
         instituicao: yup.string().required('Instituição é obrigatória'),
         curso: yup.string().required('Curso é obrigatório'),
       })).required('Formação é obrigatória'),
-/*      experiencia: yup.array().of(
+  experiencia: yup.array().of(
       yup.object().shape({
-        nome: yup.string().required('Nome é obrigatório'),
-        instituicao: yup.string().required('Instituição é obrigatória'),
+        empresa: yup.string().required('Empresa é obrigatório'),
+        tempo: yup.string().required('Tempo  de Serviço é obrigatória'),
+        cargo: yup.string().required('Cargo é obrigatório'),
+        sua_empresa_atual: yup.boolean()
+            .required('Seu emprego atual é obrigatória'),
       })).required('Experiência é obrigatória'),
-  competencias: yup.array().of(
-      yup.string().required('Competências é obrigatória'),
-  ).required('Competências é obrigatória'), */
+  competencia: yup.array().of(
+      yup.string().required('Competências é obrigatória')
+          .test('competencia',
+              'Edite ou remova o campo', (value) => {
+                console.log(value); return value !=='editar';
+              }),
+  ).required('Competências é obrigatória'),
 });
 
 const stepThreeValidate = yup.object().shape({
@@ -35,50 +46,3 @@ const stepThreeValidate = yup.object().shape({
 });
 
 export {stepOneValidate, stepTwoValidate, stepThreeValidate};
-
-
-/*
-{
-      "name": "Aurora Tereza Regina Jesus",
-      "cpf": "79349886057",
-      "data_nascimento": "1983-04-12",
-      "signo": "Áries",
-      "tipo_sanguineo": "B+",
-      "email": "aurora-jesus94@moyageorges.com.br",
-      "telefone": "91988285303",
-
-
-      "formacao": [
-        {
-          "instituicao": "FANESE",
-          "curso": "Faz tudo"
-        },
-        {
-          "instituicao": "Pio Decimo",
-          "curso": "Faz tudo II"
-        }
-      ]
-      "competencias": [
-        "react",
-        "php"
-      ],
-      "experiencia": [
-        {
-          "empresa": "Maratar",
-          "tempo": "10 anos",
-          "cargo": "Entregador de Café",
-          "sua_empresa_atual": false
-        },
-        {
-          "empresa": "Maratar",
-          "tempo": "10 anos",
-          "cargo": "Entregador de Café nivel 2",
-          "sua_empresa_atual": true
-        }
-      ],
-
-
-            "resumo": "Eu gosto de mim porque sou bom mesmo",
-
-    },
-*/

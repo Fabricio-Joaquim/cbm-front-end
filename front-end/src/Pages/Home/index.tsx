@@ -1,6 +1,6 @@
 import React from 'react';
 import logo from '../../assets/logo-CBM.svg';
-import {Image, Box, Text} from '@chakra-ui/react';
+import {Image, Box, Heading} from '@chakra-ui/react';
 import Button from '../../components/Button';
 import {useNavigate} from 'react-router-dom';
 
@@ -11,13 +11,17 @@ const Home:React.FC = () => {
   return (
     <Box display={'flex'} justifyContent={'center'}
       alignItems={'center'} flexDirection={'column'}
-      padding={[0, '50px']} gap={['5']}
+      padding={['0', '50px']} gap={['5']}
       textAlign={'center'} minHeight={'80%'}
     >
       <Image w={'215px'} h={'215px'} src={logo} alt="logo" />
-      <Text lineHeight={'48px'} fontSize={'2.5rem'}>TRABALHE CONOSCO</Text>
-      <Button onClick={handlerForm} color='Orange'>Cadastre-se</Button>
-      <Button onClick={handlerCompetitor} color='Gray'
+      <Heading lineHeight={'48px'} fontStyle={'normal'}
+        fontWeight= {'500'} paddingTop={'5'} paddingBottom={'2'}
+        fontFamily= {'Inter'}
+        fontSize={'2.5rem'}>TRABALHE CONOSCO</Heading>
+      <Button _sizeButton='lg'
+        onClick={handlerForm} color='Orange'>Cadastre-se</Button>
+      <Button _sizeButton='lg' onClick={handlerCompetitor} color='Gray'
       >
         Ver Concorrentes
       </Button>

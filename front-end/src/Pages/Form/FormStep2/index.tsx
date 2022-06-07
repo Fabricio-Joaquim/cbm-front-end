@@ -1,21 +1,29 @@
 import React from 'react';
-import {Flex, Text, Box} from '@chakra-ui/react';
-import {BsPlusCircle} from 'react-icons/bs';
-import {Formik, Form, FieldArray} from 'formik';
-import MyInput from '../../../components/Input';
-import {AiOutlineMinusCircle} from 'react-icons/ai';
-import {useFormContext} from '../../../contexts/FormContext';
+import Title from '../Title';
 import {stepTwoValidate} from '../validation';
+import {Formik, Form} from 'formik';
+import {useFormContext} from '../../../contexts/FormContext';
+import {Box} from '@chakra-ui/react';
+import GroupButtonLeftRight from '../../../components/GroupButtonLeftRight';
+import Formation from './FormationForm';
+import Experience from './ExperienceForm';
+import Competence from './CompetenceForm';
+
 export const FormStep2: React.FC = () => {
-  const {prevStep, nextStep, dataForm, dataFormStep} = useFormContext();
-  const initialValues = {formacao: [{instituicao: '', curso: ''}],
-    competencia: ['']};
+  const {prevStep, nextStep, dataForm} = useFormContext();
+  const initialValues = {
+    formacao: [{instituicao: '', curso: ''}],
+    experiencia: [{empresa: '', cargo: '', tempo: '', sua_empresa_atual: ''}],
+    competencia: ['editar'],
+  };
+
   return (
     <Box w={'full'}>
-      <Text textAlign={'center'}>Experiência</Text>
+      <Title>Experiência</Title>
       <Formik
+        enableReinitialize
         initialValues={
-          dataFormStep.stepTwo || initialValues}
+          initialValues}
         onSubmit={(values:any) => {
           nextStep();
           dataForm(values, 'stepTwo');
@@ -23,54 +31,20 @@ export const FormStep2: React.FC = () => {
         }
         validationSchema={stepTwoValidate}
       >
-        {({values, errors}) => {
+        {({values}) => {
           return (
             <Form>
-              <FieldArray
-                name="formacao"
-                render={(arrayHelpers) => (
-                  <>
-                    <Flex justifyContent={'space-between'}
-                      alignItems={'center'} verticalAlign={'center'}>
-                      <Text>Formação</Text> <BsPlusCircle
-                        onClick={() =>
-                          arrayHelpers.push({instituicao: '', curso: ''})}
-                        cursor={'pointer'}
-                      />
-                    </Flex>
-                    <Flex flexDirection={'column'} gap={'3'}>
-                      {values.formacao.map((index:any) => (
-                        <React.Fragment
-                          key={index}>
-                          {!!index && <Flex justifyContent={'flex-end'}
-                            alignItems={'center'} verticalAlign={'center'}>
-                            <AiOutlineMinusCircle
-                              onClick={() => arrayHelpers.remove(index)}
-                              cursor={'pointer'}
-                            />
-                          </Flex>}
-                          <Box
-                            border={'2px solid #D9D9D9'}
-                            borderRadius={'8px'}
-                            padding={'1rem'}
-                          >
-                            <MyInput _label='Instituição'
-                              nameID={`formacao[${index}].instituicao`}
-                              placeholder={'Ex:Universidade Federal de Sergipe'}
-                            />
-                            <MyInput _label='Curso'
-                              nameID={`formacao[${index}].curso`}
-                              placeholder={'Ex:Ciência da Computação'}
-                            />
-                          </Box>
-                        </React.Fragment>
-                      ))}
-                    </Flex>
-                  </>
-                )}
+              <Formation values={values} />
+              <Experience values={values} />
+              <Competence values={values} />
+              <GroupButtonLeftRight
+                labelLeft='Voltar'
+                labelRight='Próximo'
+                onClickLeft={prevStep}
+                onClickNext={()=>{}}
+                _sizeButton={'md'}
+                typeButtonRight={'submit'}
               />
-              <button onClick={prevStep}>Voltar</button>
-              <button type="submit">Submit</button>
             </Form>
           );
         }}

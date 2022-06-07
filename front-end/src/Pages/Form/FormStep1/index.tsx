@@ -1,5 +1,5 @@
 import {Formik, Form} from 'formik';
-import {Button, Flex, Grid} from '@chakra-ui/react';
+import {Flex, Grid} from '@chakra-ui/react';
 import MyInput from '../../../components/Input';
 import MySelect from '../../../components/Select';
 import React, {useEffect, useState} from 'react';
@@ -9,13 +9,18 @@ import {formatCPF, numberPhone} from '../../../utils/regexInput';
 import {maxInputDate} from '../../../utils/minMaxDate';
 import {useFormContext} from '../../../contexts/FormContext';
 import {stepOneValidate} from '../validation';
+import GroupButtonLeftRight from '../../../components/GroupButtonLeftRight';
+import {useNavigate} from 'react-router-dom';
+import Title from '../Title';
 
 interface IOptions{value:string, label:string}
 
 const FormStep1: React.FC = () => {
-  const {nextStep, dataFormStep, dataForm} = useFormContext();
+  const {nextStep, dataForm} = useFormContext();
   const [signos, setSignos] = useState<IOptions[]>([]);
   const [tipoSanguinio, setTipoSanguinio] = useState<IOptions[]>([]);
+  const navigate = useNavigate();
+
   useEffect(() => {
     getRequest();
   }, []);
@@ -31,9 +36,7 @@ const FormStep1: React.FC = () => {
 
   return (
     <Formik
-      validationSchema={stepOneValidate}
       initialValues={
-        dataFormStep.stepOne ||
         {
           name: '',
           cpf: '',
@@ -47,10 +50,15 @@ const FormStep1: React.FC = () => {
         nextStep();
         dataForm(values, 'stepOne');
       }}
+      validationSchema={stepOneValidate}
+      validateOnBlur
     >
-      {({handleSubmit, setFieldValue}) => (
-        <Form onSubmit={handleSubmit}>
-          <Flex flexDirection={'column'} gap={2}>
+      {({setFieldValue}:any ) => (
+        <Form>
+          <Flex flexDirection={'column'} gap={2}
+            paddingX={'32'} paddingBottom={'12'}
+          >
+            <Title>Dados Pessoais</Title>
             <MyInput _label='Nome' nameID='name'
               placeholder='Nome'
             />
@@ -88,13 +96,15 @@ const FormStep1: React.FC = () => {
                 placeholder='(00) 00000-0000'
               />
             </Grid>
-            <Button type="submit"
-              colorScheme="purple"
-              width="full"
-            >
-                  Login
-            </Button>
           </Flex>
+          <GroupButtonLeftRight
+            labelLeft='Voltar'
+            labelRight='Próximo'
+            onClickLeft={()=>navigate('/')}
+            onClickNext={()=>{}}
+            typeButtonRight='submit'
+            _sizeButton='md'
+          />
         </Form>
       )}
     </Formik>

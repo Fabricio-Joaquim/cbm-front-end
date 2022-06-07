@@ -17,16 +17,20 @@ const Description: React.FC = () => {
     navigate('/descricao');
   };
   useEffect(() => {
-    api.get('perfil').then(({data})=>setList(data));
+    api.get('perfil')
+        .then(({data})=>setList(data))
+        .catch(()=>alert('Erro ao carregar os dados'));
   }, []);
 
   return (
-    <Box minHeight={'container.md'}
+    <Box minHeight={['container.sm', 'container.sm', 'container.md',
+      'container.sm']}
+    minWidth={['200px', '200px', '620px', '998px']}
+    paddingX={['0', '0', '0', '20']}
     >
       <Text textStyle={'h1'} margin={'57px 0'}>Candidatos</Text>
 
       <Flex
-        minWidth={['200px', '200px', '700px', '998px']}
         overflowY={'scroll'}
         height={'70%'}
         flexDirection={'column'}
