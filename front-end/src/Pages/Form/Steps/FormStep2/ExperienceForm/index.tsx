@@ -1,29 +1,34 @@
 import React from 'react';
 import {FieldArray} from 'formik';
-import {Flex, Text, Box, Grid, GridItem} from '@chakra-ui/react';
-import {AiOutlineMinusCircle} from 'react-icons/ai';
 import {BsPlusCircle} from 'react-icons/bs';
-import MyInput from '../../../../components/Input';
-import MyRadio from '../../../../components/Radio';
+import {AiOutlineMinusCircle} from 'react-icons/ai';
+import MyInput from '../../../../../components/Input';
+import MyRadio from '../../../../../components/Radio';
+import {Flex, Text, Box, Grid, GridItem} from '@chakra-ui/react';
 
 const Experience = ({values}:any) => {
   const RadioOptions = [
-    {label: 'Sim', value: true},
-    {label: 'Não', value: false},
+    {label: 'Sim', value: 'true'},
+    {label: 'Não', value: 'false'},
   ];
+
+  const initialValueExperience = {
+    empresa: '',
+    tempo: '',
+    cargo: '',
+    sua_empresa_atual: '',
+  };
 
   return (
     <FieldArray
       name="experiencia"
       render={(arrayHelpers) => (
-        <Box
-          paddingX={'32'} paddingBottom={'12'}
-        >
+        <Box paddingBottom={'12'} >
           <Flex justifyContent={'space-between'}
             alignItems={'center'} verticalAlign={'center'}>
             <Text>Experiência</Text> <BsPlusCircle
               onClick={() =>
-                arrayHelpers.push({instituicao: '', curso: ''})}
+                arrayHelpers.push(initialValueExperience)}
               cursor={'pointer'}
             />
           </Flex>
@@ -51,7 +56,7 @@ const Experience = ({values}:any) => {
                     nameID={`experiencia[${index}].cargo`}
                     placeholder={'Ex:Desenvolvedor Front-End'}
                   />
-                  <Grid templateColumns={'1fr 1fr'}
+                  <Grid templateColumns={['1fr', '1fr 1fr']}
                   >
                     <GridItem>
                       <MyInput _label='Tempo de Serviço'
@@ -61,7 +66,7 @@ const Experience = ({values}:any) => {
                     </GridItem>
                     <GridItem justifySelf={'center'}>
                       <MyRadio
-                        _label='É seu emprego atual'
+                        _label='É seu emprego atual?'
                         nameID={
                           `experiencia[${index}].sua_empresa_atual`
                         }

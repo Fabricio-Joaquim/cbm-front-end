@@ -1,7 +1,7 @@
 import React from 'react';
 import {useGlobalContext} from '../../../contexts/GlobalContext';
 import {Text, Flex, Box, Divider} from '@chakra-ui/react';
-
+import BoxData from '../components/BoxData';
 const Formation: React.FC = () => {
   const {PersonDescription} = useGlobalContext();
 
@@ -13,18 +13,12 @@ const Formation: React.FC = () => {
         {PersonDescription?.formacao?.map((formacao: any, index:number) => {
           return (
             <Flex key={index} gap={'1'} flexDirection={'column'}>
-              <Box display={'flex'}>
-                <Text textStyle={'span'}>
-                Instituição:
-                </Text>
-                {formacao?.instituicao}
-              </Box>
-              <Box display={'flex'}>
-                <Text textStyle={'span'}>
-                  Curso:
-                </Text>
-                {formacao?.curso}
-              </Box>
+              <BoxData _label={'NoInstituiçãome'}
+                _value= {formacao?.instituicao}
+              />
+              <BoxData _label={'Curso'}
+                _value= {formacao?.curso}
+              />
             </Flex>
           );
         })}

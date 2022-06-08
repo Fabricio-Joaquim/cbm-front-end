@@ -6,11 +6,11 @@ import Button from '../Button';
 interface IProps{
     Person: IPerson;
     index: number;
-    onClick:any;
+    onClick:(data:IPerson)=>void;
 }
 const CardPerson: React.FC<IProps> = ({Person, index, onClick}:IProps) => {
   return (
-    <Grid templateColumns='1fr .5fr' gap={6}
+    <Grid templateColumns={'1fr .5fr'} gap={6}
       key={Person.cpf}
       height={'63px'}
       borderRadius={'10px'}
@@ -20,7 +20,7 @@ const CardPerson: React.FC<IProps> = ({Person, index, onClick}:IProps) => {
     >
       <Text w={'90%'}>{Person.name}</Text>
       <Button
-        w={['80px', '160px']} height={'35px'}
+        w={['4 !important', '160px']} height={'35px'}
         fontWeight={'500'} fontSize={'1.125rem'}
         color='Orange' lineHeight={'21px'}
         onClick={()=>onClick(Person)}

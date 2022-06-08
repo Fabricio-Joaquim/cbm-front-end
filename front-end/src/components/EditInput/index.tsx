@@ -5,7 +5,7 @@ import {Field, useFormikContext, getIn} from 'formik';
 import React from 'react';
 
 interface IProps extends InputProps {
-  nameID: any
+  nameID: string | any
 }
 
 const CustomControlsExample:React.FC<IProps> = ({nameID, ...rest}) => {

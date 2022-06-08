@@ -25,7 +25,12 @@ const MyInput: React.FC<IProps> =
       <Field
         as={isTextArea? Textarea : Input}
         id={nameID}
-        style={{backgroundColor: '#F3F3F3', borderRadius: '11px'}}
+        style={{backgroundColor: '#F3F3F3',
+          borderRadius: '11px',
+        }}
+        _focus={{boxShadow:
+          '0 0 0 3px rgba(168, 168, 168,.6)',
+        }}
         name={nameID}
         variant="outline"
         {...rest}

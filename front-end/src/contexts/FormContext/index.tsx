@@ -1,60 +1,115 @@
-import React, {createContext, useContext, useState} from 'react';
-import {IFormContext} from '../../types/IContext';
-import api from '../../services';
+// @ts-nocheck
+import {useQuery} from 'react-query';
+import {Text} from '@chakra-ui/react';
+import IPerson from '../../types/IPerson';
+import Loading from '../../components/Loading';
+import removeCaracter from '../../utils/removeCaracter';
+import {IFormContext, ArrayInput} from '../../types/IContext';
+import {getMUltiDataForm, postRequest} from '../../services/request';
+import convertArrayToOptions from '../../utils/convertArrayToOptions';
+import React, {createContext, useCallback, useContext, useState} from 'react';
 
 const GlobalContext = createContext<IFormContext>({
-  setForm: ()=>{}, form: undefined, step: 1,
+  competence: [],
+  bloodType: [],
+  sign: [],
+  step: 1,
   nextStep: () => {},
   prevStep: () => {},
   dataForm: () => {},
 });
 
-interface Props {
+interface IProps {
     children: React.ReactNode,
-    form?:any,
 }
 
-export const FormProvider = ({children}:Props) => {
-  const [form, setForm] = useState({});
-  const [step, setStep] = useState(2);
-  const [dataFormStep, setDataFormStep] = useState({
-    stepOne: {cpf: '', telefone: ''},
-    stepTwo: {},
-    stepThree: {},
-  });
+const initialDataForm = {
+  stepOne: {submited: true, cpf: '', telefone: ''},
+  stepTwo: {submited: true, experiencia: []},
+  stepThree: {submited: true},
+};
 
-  const nextStep = () => setStep((step) => step + 1);
+export const FormProvider = ({children}:IProps) => {
+  const [step, setStep] = useState(1);
+  const [sign, setSign] = useState<ArrayInput[]>([]);
+  const [bloodType, setBloodType] = useState<ArrayInput[]>([]);
+  const [competence, setCompetence] = useState<ArrayInput[]>([]);
+  const [dataFormStep, setDataFormStep] = useState(initialDataForm);
+  const [loadingForm, setLoadingForm] = useState(false);
+  const nextStep = () => {
+    step <= 4 && setStep((step) => step + 1);
+  };
   const prevStep = () => setStep((step) => step - 1);
 
-  const dataForm = (stepForm:any, positionStep: 'stepOne'
+  const dataForm = useCallback(
+      (stepForm:unknown, positionStep: 'stepOne'
    | 'stepTwo'|'stepThree') => {
-    setDataFormStep({...dataFormStep, [positionStep]: stepForm});
+        setDataFormStep({
+          ...dataFormStep,
+          [positionStep]: stepForm,
+        });
+        if (positionStep === 'stepThree') {
+          setLoadingForm(true);
+          const newCPF = removeCaracter(dataFormStep.stepOne.cpf);
+          const newTelefone = removeCaracter(dataFormStep.stepOne.telefone);
+          const newAtualJob = dataFormStep.stepTwo.experiencia.map(
+              (item:any) => {
+                return {
+                  ...item,
+                  sua_empresa_atual:
+                  item.sua_empresa_atual==='true' ? true : false,
+                };
+              },
+          );
+          const result = ({
+            ...dataFormStep.stepOne,
+            cpf: newCPF,
+            telefone: newTelefone,
+            ...dataFormStep.stepTwo,
+            experiencia: newAtualJob,
+            ...stepForm,
+            submited: undefined,
+          });
+          setDataFormStep(initialDataForm);
+          return postRequest(result)
+              .then((response:IPerson) => response)
+              .catch((error) => error)
+              .finally(() => setLoadingForm(false));
+        }
+      },
+      [dataFormStep],
+  );
 
-    if (positionStep === 'stepThree') {
-      const newCPF = dataFormStep.stepOne.cpf;
-      postRequest({
-        ...dataFormStep.stepOne,
-        cpf: newCPF,
-        ...dataFormStep.stepTwo,
-        ...dataFormStep.stepThree});
-    }
-  };
+  const {error, isLoading} = useQuery('form', ()=> getMUltiDataForm()
+      .then((data)=>data),
+  {
+    refetchOnWindowFocus: true,
+    onSuccess: (data) => {
+      setSign(convertArrayToOptions(data[0]));
+      setBloodType(convertArrayToOptions(data[1]));
+      setCompetence(convertArrayToOptions(data[2]));
+    },
+  });
 
-  const postRequest = (data:unknown) => {
-    api.post('/perfil', data)
-        .then(({data}:any)=>console.log(data))
-        .catch((err:Error)=>console.error(err, form));
-  };
+  if (error) {
+    return <Text>Erro ao carregar os dados</Text>;
+  }
+  if (isLoading) {
+    return <Loading/>;
+  }
 
   return (
     <GlobalContext.Provider value={{
+      step,
+      sign,
       nextStep,
       prevStep,
-      setForm,
       dataForm,
-      step,
-      setDataFormStep,
+      bloodType,
+      competence,
+      loadingForm,
       dataFormStep,
+      setDataFormStep,
     }}>
       {children}
     </GlobalContext.Provider>

@@ -1,13 +1,17 @@
+import React from 'react';
+import {FaCheck} from 'react-icons/fa';
 import {ModalOverlay, ModalContent, ModalBody,
   ModalFooter, Modal, Text} from '@chakra-ui/react';
-import {FaCheck} from 'react-icons/fa';
-import React from 'react';
 import Button from '../../components/Button';
+import {useNavigate} from 'react-router-dom';
+import {useGlobalContext} from '../../contexts/GlobalContext';
 
 const MyModal = ({isOpen, onClose}:any) => {
+  const navigate = useNavigate();
+  const {cpf} = useGlobalContext();
+
   return (
     <>
-
       <Modal closeOnOverlayClick={false}
         isOpen={isOpen}
         onClose={onClose}
@@ -30,11 +34,16 @@ const MyModal = ({isOpen, onClose}:any) => {
             Cadastrado com sucesso!
             </Text>
           </ModalBody>
-
           <ModalFooter display={'flex'} paddingTop={'100px'}
             justifyContent={'space-between'}>
-            <Button color='Gray' onClick={onClose}>Sair</Button>
-            <Button color='Orange' mr={3}>
+            <Button color='Gray' _sizeButton={'sm'}
+              onClick={()=>{
+                onClose(); navigate('/');
+              }}>Sair</Button>
+            <Button _sizeButton={'sm'} color='Orange' mr={3}
+              onClick={ ()=> {
+                onClose(); navigate(`/descricao/${cpf}`);
+              }}>
                 Ver Perfil
             </Button>
           </ModalFooter>

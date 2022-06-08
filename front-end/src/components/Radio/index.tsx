@@ -1,9 +1,9 @@
 // @ts-nocheck
 import {FormControl, Radio, FormErrorMessage,
-  FormLabel, Flex} from '@chakra-ui/react';
+  FormLabel, RadioGroup} from '@chakra-ui/react';
 import {useFormikContext, getIn, Field} from 'formik';
 import React from 'react';
-
+import './style.css';
 interface IProps {
     nameID: 'sua_empresa_atual' | any;
     _label:string;
@@ -14,7 +14,6 @@ const MyRadio: React.FC<IProps> = ({nameID, _label, options}) => {
   const {errors, touched} = useFormikContext();
   const errorMessage = getIn(errors, nameID);
   const arrayErrorTouch = getIn(touched, nameID);
-
   return (
     <FormControl display={'flex'} flexDirection={'column'}
       isInvalid={
@@ -22,34 +21,27 @@ const MyRadio: React.FC<IProps> = ({nameID, _label, options}) => {
          (errorMessage && arrayErrorTouch)
       }>
       <FormLabel htmlFor={nameID}>{_label}</FormLabel>
-      <Flex>
-        {/*         {options.map((option:any, index:any) => (
-          <Flex key={index}>
-            {option.label}
+      <RadioGroup defaultChecked py={2} display="flex" gridColumnGap={1}>
+        {options.map((item, index) => {
+          return (
             <Field
+              size='lg'
+              // className='radio-button-person'
+              key={index}
               name={nameID}
-              value={option.value}
+              id={nameID}
               as={Radio}
-            />
-          </Flex>
-        ))} */}
-                  Sim
-        <Field
-          as={Radio}
-          id={nameID}
-          name={nameID}
-          variant="outline"
-          value={false}
-        />
-        Não
-        <Field
-          as={Radio}
-          id={nameID}
-          name={nameID}
-          variant="outline"
-          value={true}
-        />
-      </Flex>
+              checked
+              value={item.value}
+              _focus={{boxShadow:
+                '0 0 0 3px rgba(168, 168, 168,.6)',
+              }}
+            >
+              {item.label}
+            </Field>
+          );
+        })}
+      </RadioGroup>
       <FormErrorMessage>
         {errors[nameID] || errorMessage}
       </FormErrorMessage>
@@ -58,25 +50,3 @@ const MyRadio: React.FC<IProps> = ({nameID, _label, options}) => {
 };
 
 export default MyRadio;
-
-
-/*
-
-  <FormControl isInvalid={
-      (!!errors[nameID] && touched[nameID]) || (errorMessage && arrayErrorTouch)
-    }>
-      <FormLabel htmlFor="password">{_label}</FormLabel>
-      <Field
-        as={isTextArea? Textarea : Input}
-        id={nameID}
-        style={{backgroundColor: '#F3F3F3', borderRadius: '11px'}}
-        name={nameID}
-        type="tel"
-        variant="outline"
-        {...rest}
-      />
-      <FormErrorMessage>
-        {errors[nameID] || errorMessage}
-      </FormErrorMessage>
-    </FormControl>
-*/

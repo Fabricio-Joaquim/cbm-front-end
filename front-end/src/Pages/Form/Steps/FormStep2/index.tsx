@@ -1,20 +1,21 @@
 import React from 'react';
-import Title from '../Title';
-import {stepTwoValidate} from '../validation';
+import Title from '../../components/Title';
+import {stepTwoValidate} from '../../validation';
 import {Formik, Form} from 'formik';
-import {useFormContext} from '../../../contexts/FormContext';
+import {useFormContext} from '../../../../contexts/FormContext';
 import {Box} from '@chakra-ui/react';
-import GroupButtonLeftRight from '../../../components/GroupButtonLeftRight';
+import GroupButtonLeftRight from '../../../../components/GroupButtonLeftRight';
 import Formation from './FormationForm';
 import Experience from './ExperienceForm';
 import Competence from './CompetenceForm';
 
 export const FormStep2: React.FC = () => {
-  const {prevStep, nextStep, dataForm} = useFormContext();
+  const {prevStep, nextStep, dataForm, dataFormStep} = useFormContext();
   const initialValues = {
     formacao: [{instituicao: '', curso: ''}],
     experiencia: [{empresa: '', cargo: '', tempo: '', sua_empresa_atual: ''}],
-    competencia: ['editar'],
+    // competencias: ['editar'],
+    competencias: [''],
   };
 
   return (
@@ -23,8 +24,11 @@ export const FormStep2: React.FC = () => {
       <Formik
         enableReinitialize
         initialValues={
-          initialValues}
-        onSubmit={(values:any) => {
+          dataFormStep.stepTwo.submited?
+          initialValues:
+          dataFormStep.stepTwo
+        }
+        onSubmit={(values:unknown) => {
           nextStep();
           dataForm(values, 'stepTwo');
         }
@@ -34,14 +38,15 @@ export const FormStep2: React.FC = () => {
         {({values}) => {
           return (
             <Form>
-              <Formation values={values} />
-              <Experience values={values} />
-              <Competence values={values} />
+              <Box paddingX={['0', '0', '10', '32']}>
+                <Formation values={values} />
+                <Experience values={values} />
+                <Competence values={values} />
+              </Box>
               <GroupButtonLeftRight
                 labelLeft='Voltar'
                 labelRight='Próximo'
                 onClickLeft={prevStep}
-                onClickNext={()=>{}}
                 _sizeButton={'md'}
                 typeButtonRight={'submit'}
               />

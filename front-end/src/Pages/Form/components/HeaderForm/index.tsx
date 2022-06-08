@@ -1,14 +1,16 @@
 import {Flex} from '@chakra-ui/react';
 import React, {Fragment} from 'react';
-import icon1 from '../../../assets/icon-step1.svg';
-import icon2 from '../../../assets/icon-step2.svg';
-import icon3 from '../../../assets/icon-step3.svg';
+import icon1 from '../../../../assets/icon-step1.svg';
+import icon2 from '../../../../assets/icon-step2.svg';
+import icon3 from '../../../../assets/icon-step3.svg';
 import {IconLogo} from './iconModule';
-import {useFormContext} from '../../../contexts/FormContext';
+import {useFormContext} from '../../../../contexts/FormContext';
 
 const HeaderForm: React.FC = () => {
   const {step} = useFormContext();
+
   const newuStep = step - 1;
+
   // refactor logic
   const steps = [
     [
@@ -42,10 +44,12 @@ const HeaderForm: React.FC = () => {
 
   return (
     <Flex justifyContent={'center'}>
-      {render.map((item) => <Fragment key={item.id}>
-        {item.component}
-      </Fragment>,
-      )}
+      {
+        render.map((item) => <Fragment key={item.id}>
+          {item.component}
+        </Fragment>,
+        )
+      }
     </Flex>
   );
 };

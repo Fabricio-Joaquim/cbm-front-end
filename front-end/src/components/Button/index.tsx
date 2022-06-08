@@ -8,7 +8,6 @@ interface IProps extends ButtonProps{
     color: 'Gray' | 'Orange',
     children: string | React.ReactNode,
     onClick?: () => void | any,
-    rest?:any,
     _sizeButton?: 'sm' | 'md' | 'lg',
 }
 
@@ -28,8 +27,15 @@ const MyButton: React.FC<IProps> = ({color, children,
       break;
     case 'md':
       personalizeSize = {
-        w: '216.84px',
-        h: '68px',
+        w: ['110px', '150px', '216.84px'],
+        h: ['55px', '68px'],
+        borderRadius: '14px',
+      };
+      break;
+    case 'sm':
+      personalizeSize = {
+        w: ['100px', '129px'],
+        h: '40px',
         borderRadius: '14px',
       };
       break;
@@ -45,11 +51,16 @@ const MyButton: React.FC<IProps> = ({color, children,
       lineHeight={'39px'} color={'#fff'}
       w={'100%'}
       maxW={'408px'}
-      minW={'129px'}
+      minW={['80px', '129px']}
       maxH={'90px'}
       minH={'35px'}
       onClick={onClick}
       {...personalizeSize}
+      _focus={{boxShadow:
+              color==='Gray'?
+              '0 0 0 3px rgba(212, 47, 67, .6)':
+              '0 0 0 3px rgba(168, 168, 168,.6)',
+      }}
       {...rest}
     >
       {children}

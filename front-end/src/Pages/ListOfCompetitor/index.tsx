@@ -6,6 +6,9 @@ import api from '../../services';
 import IPerson from '../../types/IPerson';
 import CardPerson from '../../components/CardPerson';
 import {useGlobalContext} from '../../contexts/GlobalContext';
+import {useQuery} from 'react-query';
+import Loading from '../../components/Loading';
+import './style.css';
 
 const Description: React.FC = () => {
   const [list, setList] = React.useState<IPerson[]>([]);
@@ -16,20 +19,39 @@ const Description: React.FC = () => {
     setPersonDescription(person);
     navigate('/descricao');
   };
+
   useEffect(() => {
-    api.get('perfil')
-        .then(({data})=>setList(data))
-        .catch(()=>alert('Erro ao carregar os dados'));
+    setList([]);
   }, []);
 
+  const {error, isLoading} = useQuery('perfil', () => api.get('perfil')
+      .then(({data})=>data), {
+    refetchOnWindowFocus: false,
+    refetchOnMount: true,
+    refetchOnReconnect: true,
+    retry: true,
+    onSuccess: (data) => {
+      setList(data);
+    },
+    retryDelay: 5000,
+  });
+
+  if (error) {
+    return <Text>Erro ao carregar os dados</Text>;
+  }
+
+  if (isLoading) {
+    return <Loading/>;
+  }
+
   return (
-    <Box minHeight={['container.sm', 'container.sm', 'container.md',
-      'container.sm']}
+    <Box minHeight={['container.md', 'container.sm', 'container.md',
+      'container.md']}
     minWidth={['200px', '200px', '620px', '998px']}
     paddingX={['0', '0', '0', '20']}
+    width={['100%', '100%', '100%', '100%']}
     >
       <Text textStyle={'h1'} margin={'57px 0'}>Candidatos</Text>
-
       <Flex
         overflowY={'scroll'}
         height={'70%'}
@@ -46,10 +68,13 @@ const Description: React.FC = () => {
               />,
         ) }
       </Flex>
-      <Button h={'68px'} borderRadius={'10px'}
-        w={'216px'} color='Orange' onClick={backScreen}>
+      <Flex justifyContent={['center', 'flex-start']}>
+        <Button _sizeButton='md' color='Orange'
+          onClick={backScreen}
+        >
         Voltar
-      </Button>
+        </Button>
+      </Flex>
     </Box>
   );
 };

@@ -1,18 +1,26 @@
 import Person from './IPerson';
 export interface IGlobalContext{
-    state: any;
-    setState: any;
     PersonDescription?: Person;
     setPersonDescription?: any;
+    handlerCPF?: any;
+    cpf?: string;
+}
+
+export interface ArrayInput{
+    value: string,
+    label: string
 }
 
 export interface IFormContext{
-    form?: Person | undefined;
-    setForm: (form: any) => void;
-    step: number;
     nextStep: () => void;
     prevStep: () => void;
+    step: number;
     dataForm: any;
+    loadingForm?: boolean;
     setDataFormStep?: any;
     dataFormStep?: any;
+    sign: ArrayInput[];
+    bloodType: ArrayInput[];
+    competence: ArrayInput[];
+    setSign?: (sign: ArrayInput[]) => void;
 }

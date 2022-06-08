@@ -4,14 +4,19 @@ import Routes from './Router';
 import theme from './style/themeGLobal';
 import Layer from './components/Layer';
 import {GlobalProvider} from './contexts/GlobalContext';
+import {QueryClient, QueryClientProvider} from 'react-query';
 
 const App = () => {
+  const queryClient = new QueryClient();
+
   return (
     <ChakraProvider theme={theme}>
       <GlobalProvider>
-        <Layer>
-          <Routes/>
-        </Layer>
+        <QueryClientProvider client={queryClient}>
+          <Layer>
+            <Routes/>
+          </Layer>
+        </QueryClientProvider>
       </GlobalProvider>
     </ChakraProvider>
   );

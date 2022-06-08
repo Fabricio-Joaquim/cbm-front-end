@@ -1,9 +1,9 @@
 import React from 'react';
-import {useFormContext} from '../../contexts/FormContext';
+import {useFormContext} from '../../../contexts/FormContext';
 import FormStep1 from './FormStep1';
 import FormStep2 from './FormStep2';
 import FormStep3 from './FormStep3';
-import HeaderForm from './HeaderForm';
+import HeaderForm from '../components/HeaderForm';
 
 
 const Form: React.FC = () => {
