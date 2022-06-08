@@ -8,15 +8,18 @@
       "telefone": "91988285303",
       "tipo_sanguineo": "B+",
       "resumo": "Eu gosto de mim porque sou bom mesmo",
-      "competencias": ["react","php"],
+      "competencias": [
+        "react",
+        "php"
+      ],
       "data_nascimento": "1983-04-12",
       "experiencia": [
         {
           "empresa": "Maratar",
           "tempo": "10 anos",
           "cargo": "Entregador de Café",
-          "sua_empresa_atual": true
-        } ,
+          "sua_empresa_atual": false
+        },
         {
           "empresa": "Maratar",
           "tempo": "10 anos",
@@ -24,7 +27,7 @@
           "sua_empresa_atual": true
         }
       ],
-      "formação": [
+      "formacao": [
         {
           "instituicao": "FANESE",
           "curso": "Faz tudo"

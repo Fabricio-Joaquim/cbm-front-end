@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "json-server --watch db.json --id cpf -p 6666"
+    "start": "json-server --watch db.json --id cpf -p 3003"
   },
   "author": "Edson Lima",
   "license": "ISC",
