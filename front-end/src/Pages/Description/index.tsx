@@ -10,10 +10,10 @@ import {useNavigate, useParams} from 'react-router-dom';
 import {useGlobalContext} from '../../contexts/GlobalContext';
 import api from '../../services';
 
-const Description: React.FC = () => {
+const Description: React.FC = ():JSX.Element => {
   const {cpf} = useParams();
   const {setPersonDescription} = useGlobalContext();
-
+  console.log(cpf);
 
   useEffect(() => {
     if (cpf) {
@@ -24,7 +24,7 @@ const Description: React.FC = () => {
 
 
   const navigate = useNavigate();
-  const handlerBack = () => navigate(-1);
+  const handlerBack = () => cpf?navigate('/'):navigate(-1);
   return (
     <Box >
       <Box

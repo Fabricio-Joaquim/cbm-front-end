@@ -13,7 +13,7 @@ const Formation: React.FC = () => {
         {PersonDescription?.formacao?.map((formacao: any, index:number) => {
           return (
             <Flex key={index} gap={'1'} flexDirection={'column'}>
-              <BoxData _label={'NoInstituiçãome'}
+              <BoxData _label={'Instituição'}
                 _value= {formacao?.instituicao}
               />
               <BoxData _label={'Curso'}

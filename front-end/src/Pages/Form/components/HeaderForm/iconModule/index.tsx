@@ -32,7 +32,7 @@ export const IconLogo =({icon, lineBefore, active,
         alignItems={'center'}
         h={['75', '140px']} w={['140px']} bg={colorStep()}
         transition={'all 0.3s ease-in-out' }>
-        <Image height={['30px', '30px', '50px']}
+        <Image height={['30px', '30px', '50px']} alt={'icone de etapa'}
           src={icon} transition={'all 0.3s ease-in-out' } />
       </Flex>
       {lineBefore&&<Box height={'8px'}

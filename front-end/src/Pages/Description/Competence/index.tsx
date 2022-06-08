@@ -9,7 +9,7 @@ const Competence: React.FC = () => {
     <Box display={'flex'} flexDirection={'column'}
       gap={'2'} padding={'20px 0'}>
       <Text textStyle={'h3'}>Competências</Text>
-      <Flex gap={'2'}>
+      <Flex gap={'2'} wrap={'wrap'}>
         {PersonDescription?.competencias?.map(
             (competencia: string, index:number) => {
               return (

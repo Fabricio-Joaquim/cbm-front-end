@@ -1,5 +1,5 @@
 import React from 'react';
-import {FieldArray} from 'formik';
+import {FieldArray, useFormikContext} from 'formik';
 import {BsPlusCircle} from 'react-icons/bs';
 import {Box, Flex, Text} from '@chakra-ui/react';
 import {AiOutlineMinusCircle} from 'react-icons/ai';
@@ -7,7 +7,12 @@ import {AiOutlineMinusCircle} from 'react-icons/ai';
 import SelectInput from '../../../../../components/Select';
 import {useFormContext} from '../../../../../contexts/FormContext';
 
-const CompetetionForm: React.FC<any> = ({values}) => {
+interface IValues{
+  competencias: string[];
+}
+
+const CompetetionForm: React.FC = () => {
+  const {values}:{values:IValues} = useFormikContext();
   const {competence} = useFormContext();
   return (
     <FieldArray

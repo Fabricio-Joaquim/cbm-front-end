@@ -19,9 +19,10 @@ const Home:React.FC = () => {
         fontWeight= {'500'} paddingTop={'5'} paddingBottom={'2'}
         fontFamily= {'Inter'}
         fontSize={'2.5rem'}>TRABALHE CONOSCO</Heading>
-      <Button _sizeButton='lg'
+      <Button _sizeButton='lg' data-testid={'btn-cadastrar'}
         onClick={handlerForm} color='Orange'>Cadastre-se</Button>
-      <Button _sizeButton='lg' onClick={handlerCompetitor} color='Gray'
+      <Button _sizeButton='lg' data-testid={'btn-competidor'}
+        onClick={handlerCompetitor} color='Gray'
       >
         Ver Concorrentes
       </Button>

@@ -1,12 +1,23 @@
 import React from 'react';
-import {FieldArray} from 'formik';
+import {FieldArray, useFormikContext} from 'formik';
 import {BsPlusCircle} from 'react-icons/bs';
 import {AiOutlineMinusCircle} from 'react-icons/ai';
 import MyInput from '../../../../../components/Input';
 import MyRadio from '../../../../../components/Radio';
 import {Flex, Text, Box, Grid, GridItem} from '@chakra-ui/react';
 
-const Experience = ({values}:any) => {
+interface dataValue{
+  empresa: string;
+  cargo: string;
+  tempo: string;
+  sua_empresa_atual: string;
+}
+interface IValues{
+  experiencia: dataValue[]
+}
+
+const Experience:React.FC = () => {
+  const {values}:{values:IValues} = useFormikContext();
   const RadioOptions = [
     {label: 'Sim', value: 'true'},
     {label: 'Não', value: 'false'},

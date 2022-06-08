@@ -1,11 +1,20 @@
 import React from 'react';
-import {FieldArray} from 'formik';
+import {FieldArray, useFormikContext} from 'formik';
 import {BsPlusCircle} from 'react-icons/bs';
 import {Box, Text, Flex} from '@chakra-ui/react';
 import {AiOutlineMinusCircle} from 'react-icons/ai';
 import MyInput from '../../../../../components/Input';
 
-const Formation: React.FC<any> = ({values}) => {
+interface dataValue{
+  instituicao: string;
+  curso: string;
+}
+interface IValues{
+  formacao: dataValue[]
+}
+
+const Formation: React.FC = () => {
+  const {values}: {values:IValues} = useFormikContext();
   return (
     <FieldArray
       name="formacao"

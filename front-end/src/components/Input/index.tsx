@@ -23,6 +23,7 @@ const MyInput: React.FC<IProps> =
     }>
       <FormLabel htmlFor={nameID}>{_label}</FormLabel>
       <Field
+        data-testid={nameID}
         as={isTextArea? Textarea : Input}
         id={nameID}
         style={{backgroundColor: '#F3F3F3',
@@ -31,6 +32,7 @@ const MyInput: React.FC<IProps> =
         _focus={{boxShadow:
           '0 0 0 3px rgba(168, 168, 168,.6)',
         }}
+        autoComplete={'off'}
         name={nameID}
         variant="outline"
         {...rest}

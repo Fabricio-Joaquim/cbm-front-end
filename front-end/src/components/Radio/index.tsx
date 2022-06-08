@@ -4,16 +4,21 @@ import {FormControl, Radio, FormErrorMessage,
 import {useFormikContext, getIn, Field} from 'formik';
 import React from 'react';
 import './style.css';
+type valueArray ={
+  value: string;
+  label: string;
+}
 interface IProps {
     nameID: 'sua_empresa_atual' | any;
     _label:string;
-    options: any[];
+    options: valueArray[];
 }
 
 const MyRadio: React.FC<IProps> = ({nameID, _label, options}) => {
-  const {errors, touched} = useFormikContext();
+  const {errors, touched, values} = useFormikContext();
   const errorMessage = getIn(errors, nameID);
   const arrayErrorTouch = getIn(touched, nameID);
+  const getValues = getIn(values, nameID);
   return (
     <FormControl display={'flex'} flexDirection={'column'}
       isInvalid={
@@ -21,12 +26,14 @@ const MyRadio: React.FC<IProps> = ({nameID, _label, options}) => {
          (errorMessage && arrayErrorTouch)
       }>
       <FormLabel htmlFor={nameID}>{_label}</FormLabel>
-      <RadioGroup defaultChecked py={2} display="flex" gridColumnGap={1}>
+      <RadioGroup
+        defaultValue={getValues}
+        py={2} display="flex" gridColumnGap={1}>
         {options.map((item, index) => {
           return (
             <Field
               size='lg'
-              // className='radio-button-person'
+              className='radio-button-person'
               key={index}
               name={nameID}
               id={nameID}

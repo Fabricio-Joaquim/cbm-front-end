@@ -23,6 +23,7 @@ interface IProps {
     children: React.ReactNode,
 }
 
+// formulario de contexto
 const initialDataForm = {
   stepOne: {submited: true, cpf: '', telefone: ''},
   stepTwo: {submited: true, experiencia: []},
@@ -36,11 +37,13 @@ export const FormProvider = ({children}:IProps) => {
   const [competence, setCompetence] = useState<ArrayInput[]>([]);
   const [dataFormStep, setDataFormStep] = useState(initialDataForm);
   const [loadingForm, setLoadingForm] = useState(false);
+  // controlando o formulario e o header do formulario
   const nextStep = () => {
     step <= 4 && setStep((step) => step + 1);
   };
   const prevStep = () => setStep((step) => step - 1);
 
+  // inserindo os dados do formulario
   const dataForm = useCallback(
       (stepForm:unknown, positionStep: 'stepOne'
    | 'stepTwo'|'stepThree') => {
@@ -48,8 +51,10 @@ export const FormProvider = ({children}:IProps) => {
           ...dataFormStep,
           [positionStep]: stepForm,
         });
+        // Se o formulario estiver completo, envia para o backend
         if (positionStep === 'stepThree') {
           setLoadingForm(true);
+          // tratando os dados do formulario
           const newCPF = removeCaracter(dataFormStep.stepOne.cpf);
           const newTelefone = removeCaracter(dataFormStep.stepOne.telefone);
           const newAtualJob = dataFormStep.stepTwo.experiencia.map(
@@ -70,6 +75,7 @@ export const FormProvider = ({children}:IProps) => {
             ...stepForm,
             submited: undefined,
           });
+          // reseta o formulario
           setDataFormStep(initialDataForm);
           return postRequest(result)
               .then((response:IPerson) => response)
@@ -79,7 +85,7 @@ export const FormProvider = ({children}:IProps) => {
       },
       [dataFormStep],
   );
-
+  // requisitando os dados do formulario
   const {error, isLoading} = useQuery('form', ()=> getMUltiDataForm()
       .then((data)=>data),
   {

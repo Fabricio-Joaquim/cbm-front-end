@@ -1,7 +1,7 @@
-import {ColorModeScript} from '@chakra-ui/react';
+import App from './App';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom/client';
-import App from './App';
+import {ColorModeScript} from '@chakra-ui/react';
 import reportWebVitals from './reportWebVitals';
 
 const container = document.getElementById('root');

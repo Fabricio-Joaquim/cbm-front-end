@@ -35,13 +35,13 @@ export const FormStep2: React.FC = () => {
         }
         validationSchema={stepTwoValidate}
       >
-        {({values}) => {
+        {() => {
           return (
             <Form>
               <Box paddingX={['0', '0', '10', '32']}>
-                <Formation values={values} />
-                <Experience values={values} />
-                <Competence values={values} />
+                <Formation />
+                <Experience />
+                <Competence />
               </Box>
               <GroupButtonLeftRight
                 labelLeft='Voltar'
